@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neuratec</title>
+    <style>
+        /* --- ESTILOS GERAIS E FUNDO --- */
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden; /* Impede barras de rolagem indesejadas */
+            font-family: 'Courier New', Courier, monospace; /* Fonte estilo "código" global */
+        }
+
+        body {
+            /* Gradiente Preto e Branco Suavizado */
+            background: linear-gradient(180deg, #000000 0%, #333333 50%, #f0f0f0 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            opacity: 0; /* Começa invisível para o Fade-in */
+            animation: fadeInPage 2.5s ease-out forwards; /* Animação de entrada */
+        }
+
+        /* --- ANIMAÇÃO FADE-IN --- */
+        @keyframes fadeInPage {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* --- CONTAINER CENTRAL --- */
+        .main-container {
+            text-align: center;
+            position: relative;
+            z-index: 10;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* --- LOGOTIPO CIRCULAR --- */
+        .logo-container {
+            width: 200px;
+            height: 200px;
+            margin: 0;
+            border-radius: 50%; /* Torna circular */
+            overflow: hidden; /* Corta o que estiver fora do círculo */
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.2); /* Brilho suave */
+            border: 2px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .logo-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Garante que a imagem preencha o círculo sem distorcer */
+            display: block;
+        }
+
+        /* --- TÍTULO NEURATEC (Alterado) --- */
+        .brand-name {
+            font-family: Arial, Helvetica, sans-serif; /* Fonte Padrão */
+            font-size: 2.0rem; /* Tamanho reduzido minimamente */
+            color: #ffffff;
+            margin: 15px 0 20px 0;
+            letter-spacing: normal; /* Letras juntas, sem espaçamento extra */
+            text-transform: none; /* Respeita maiúsculas/minúsculas originais */
+            text-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+            font-weight: bold;
+        }
+
+        /* --- CONTAGEM DE SEGUIDORES --- */
+        .follower-count {
+            background-color: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(5px);
+            padding: 10px 20px;
+            border-radius: 20px;
+            color: #fff; /* Começa branco por causa do fundo escuro */
+            font-size: 1.2rem;
+            font-weight: bold;
+            display: inline-block;
+            transition: color 1s;
+        }
+        
+        .follower-label {
+            font-size: 0.8rem;
+            opacity: 0.8;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        /* --- TEXTOS FLUTUANTES (MARQUEE) --- */
+        .text-stream-container {
+            position: absolute;
+            width: 100%;
+            left: 0;
+            overflow: hidden;
+            white-space: nowrap;
+            pointer-events: none; /* O mouse passa direto */
+        }
+
+        .top-stream {
+            top: 15%; /* Posição acima do logo */
+            color: rgba(255, 255, 255, 0.3); /* Texto discreto */
+        }
+
+        .bottom-stream {
+            bottom: 15%; /* Posição abaixo do logo */
+            color: rgba(0, 0, 0, 0.4); /* Texto escuro pois o fundo é claro aqui */
+        }
+
+        .moving-text {
+            display: inline-block;
+            padding-left: 100%; /* Começa fora da tela */
+            animation: moveLeftToRight 20s linear infinite;
+            font-size: 1.5rem;
+        }
+
+        @keyframes moveLeftToRight {
+            0% { transform: translate(-100%, 0); }
+            100% { transform: translate(100vw, 0); } /* Vai até a largura da tela */
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- Faixa de Texto Superior -->
+    <div class="text-stream-container top-stream">
+        <div class="moving-text" id="text-top"></div>
+    </div>
+
+    <!-- Conteúdo Principal -->
+    <div class="main-container">
+        <!-- Imagem Personalizada -->
+        <div class="logo-container">
+            <!-- Linha mantida -->
+            <img src="NeuratecLogotipo.jpg" alt="Neuratec Logo" onerror="this.src='https://via.placeholder.com/200?text=Neuratec';"> 
+        </div>
+
+        <!-- Título Adicionado -->
+        <h1 class="brand-name">Neuratec</h1>
+
+        <!-- Contador Automatizado -->
+        <div class="follower-count">
+            <span class="follower-label">@neuratec (X Platform)</span>
+            <span id="count-display">Carregando...</span> Seguidores
+        </div>
+    </div>
+
+    <!-- Faixa de Texto Inferior -->
+    <div class="text-stream-container bottom-stream">
+        <div class="moving-text" id="text-bottom"></div>
+    </div>
+
+    <script>
+        // --- 1. SCRIPT DE PALAVRAS ALEATÓRIAS ---
+        const tokenWords = [
+            "Neuratec", "Python", "GPU", "Algoritmo", "Gradiente", 
+            "Interface", "Web", "Design", "Circular", "Transição", 
+            "Tokens", "Aleatoriedade", "Script", "Automated", "X-API", 
+            "Logotipo", "Futuro/Passado", "Processamento", "Dados", "Conexão"
+        ];
+
+        function generateRandomString() {
+            let shuffled = tokenWords.sort(() => 0.5 - Math.random());
+            return shuffled.slice(0, 8).join("  •  "); 
+        }
+
+        document.getElementById('text-top').innerText = generateRandomString();
+        document.getElementById('text-bottom').innerText = generateRandomString();
+
+        setInterval(() => {
+            document.getElementById('text-top').innerText = generateRandomString();
+            document.getElementById('text-bottom').innerText = generateRandomString();
+        }, 20000); 
+
+
+        // --- 2. SCRIPT DE CONTAGEM DE SEGUIDORES (Simulação) ---
+        const displayElement = document.getElementById('count-display');
+        let simulatedFollowers = 2; 
+
+        function updateCounter() {
+            if(Math.random() > 0.7) {
+                simulatedFollowers += Math.floor(Math.random() * 3);
+            }
+            displayElement.innerText = simulatedFollowers.toLocaleString('pt-BR');
+        }
+
+        displayElement.innerText = simulatedFollowers.toLocaleString('pt-BR');
+        setInterval(updateCounter, 5000); 
+
+    </script>
+</body>
+</html>
